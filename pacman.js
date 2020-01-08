@@ -118,3 +118,29 @@ setInterval(function cb(){
 
 
 drawFace();
+
+function drawPacMan(ang, clear, mouthAngle) {
+  ang = ang*Math.PI/180;
+  g.setColor(clear?0:0xFD20); // black/orange
+  var r = 108;
+  var x = CenterX + Math.sin(ang)*r;
+  var y = CenterY - Math.cos(ang)*r;
+  g.fillCircle(x,y,7);
+  if (clear) return;
+  g.setColor(0); // black
+  var a = mouthAngle*Math.PI/180;
+  g.fillPoly([
+    x,y,
+    x+Math.cos(ang-a)*12, y+Math.sin(ang-a)*12,
+    x+Math.cos(ang+a)*12, y+Math.sin(ang+a)*12
+    ]);
+}
+var lastPacManAngle = 0;
+setInterval(function cb(){
+  d = new Date();
+  let s = d.getSeconds() + (d.getMilliseconds()/1000);
+  let ang = s*6;
+  drawPacMan(lastPacManAngle, true); // remove old
+  drawPacMan(ang, false, 10+10*Math.sin(s*10)); // add new
+  lastPacManAngle = ang;
+},100);
