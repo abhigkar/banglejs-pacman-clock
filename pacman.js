@@ -3,15 +3,15 @@
     g.clear();
     // place your const, vars, functions or classes here
 	var imgCherry = {
-	  width : 20, height : 20, bpp : 8,
-	  transparent : 254,
-	  buffer : E.toArrayBuffer(atob("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkenoqAAAAAAAAAAAAAAAAAAAqenqBgSoAAAAAAAAAAAAAAAArelYrgCsrAAAAAAAAAAAAAAAAK3orKySAAAAAAAAAAAAAJE9zc3N6KwAkVisAAAAAAAAAAABJl7uXl5dIKlYrAAAAAAAAAAAAAHO7u5eRl2xznnNPJAAAAAAAAAAAc22Xu5dJbZeXl5dzJAAAAAAAAABzl2yXc0iXu7W7u5ckAAAAAAAAAEiXc5dzSJdsl7u7lyQAAAAAAAAAAEhzc0hIl05tu7uXJAAAAAAAAAAAAAAAACSXl227l3MkAAAAAAAAAAAAAAAAACRzc3JzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="))
-	};
-	var imgStrawberry = {
-	  width : 20, height : 18, bpp : 8,
-	  transparent : 254,
-	  buffer : E.toArrayBuffer(atob("KwAAAAAAAAAAACQAAAAAAAAAACsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAAAAAAAAAAAAAAAAAABgYNOA0GBgAAAAAAAAAAAAAAAE9cODg4ODdcKwAAAAAAAAAAAABJl3NbNzdbW3OXSAAAAAAAAAAASJeXl5dzeXOXu7uXSQAAAAAAAABtc2yXl7uXl7uXbJdPAAAAAAAAAE+Xl5dsl2yXbJeXl08AAAAAAAAAbbu7l22XbZdsl7u7TwAAAAAAAAAkl5dtu5dtl5dsl5ckAAAAAAAAAABJl2yXl2yXu2yXSAAAAAAAAAAAAEiXu5eXl5eXl5ckAAAAAAAAAAAAAEiXl2yXl2xzSAAAAAAAAAAAAAAAAEiXl5eXc0gAAAAAAAAAAAAAAAAAACRIc0gkAAAAAAAAACsAAAAAAAAAACQrJAAAAAAAAAAr"))
-	};
+      width : 15, height : 15, bpp : 16,
+      transparent : 1,
+      buffer : E.toArrayBuffer(atob("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3KrcqgAAAAAAAAAAAAAAAAAAAAAAAAAAAADcqtyq3KrcqgAAAAAAAAAAAAAAAAAAAAAAANyq3KoAANyqAAAAAAAAAAAAAAAAAAAAAAAAAADcqgAAAAAAANyqAAAAAAAAAAAAAAAA+AD4APgA3KoAAAAAAADcqgAAAAAAAAAAAAAAAPgA+AD4ANyq+AD4AAAA3KoAAAAAAAAAAAAAAAAAAPgA+AD4APgA+AAAAPgA3Kr4APgAAAAAAAAAAAAAAPgA3v/4APgAAAD4APgA3Kr4APgA+AAAAAAAAAAAAPgA+ADe//gAAAD4APgA+AD4APgA+AAAAAAAAAAAAAAA+AD4APgAAAD4AN7/+AD4APgA+AAAAAAAAAAAAAAAAAAAAAAAAAD4APgA3v/4APgA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAPgA+AD4APgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"))
+    };
+	var imgStrawberry =  {
+  width : 15, height : 15, bpp : 16,
+  transparent : 1,
+  buffer : E.toArrayBuffer(atob("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/hn+Gf4b/33+Gf4Z/pgAAAAAAAAAAAAAAAAAA+AD4AH+mf4Z/hn+Gf4b4APgAAAAAAAAAAAAAAPgA+AD4APgA+AB/hvgA+AD4AP/f+AAAAAAAAAAAAPgA/9/4APgA+AD4APgA/9/4APgA+AAAAAAAAAAAAPgA+AD4AP/f+AD/3/gA+AD4APgA+AAAAAAAAAAAAPgA+AD4APgA+AD4APgA+AD/3/gA+AAAAAAAAAAAAAAA+AD/3/gA+AD/3/gA+AD4APgAAAAAAAAAAAAAAAAA+AD4APgA+AD4APgA+AD4APgAAAAAAAAAAAAAAAAAAAD4APgA/9/4APgA/98AAAAAAAAAAAAAAAAAAAAAAAAAAPgA+AD4APgA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"))
+};
 	var imgMonsterRed ={
   width : 16, height : 16, bpp : 16,
   transparent : 1,
@@ -26,6 +26,7 @@ var imgMonsterBlue = {
 	let minuteDate = new Date();
 
     let intervalRefSec = null;
+    let intervalRefMin= null; 
 	const Width  = g.getWidth(),  CenterX = Math.floor(Width)/2;
 	const Height = g.getHeight(), CenterY = Math.floor(Height)/2;
 	const Radius = Math.min(CenterX,CenterY), RadiusSquared = Radius*Radius;
@@ -75,27 +76,24 @@ var imgMonsterBlue = {
 		g.setColor(1,1,1);
 
 		drawFruitRing();
-		drawDottedCircle(58,0xF800);
+		drawDottedCircle(55,0xF800);
 		drawDottedCircle(48,'#54c0ed');
 
 
-		drawThickCircle(Radius-100,2);
-
-
-		drawThickCircle(Radius-104,2);
+		drawThickCircle(Radius-100,2); 
+        drawThickCircle(Radius-104,2);
 		drawPacManTrack();
-       drawMnters();
+        drawMnters();
 		onMinute();
-       
 	}
 	function drawFruitRing(){
 		for (i = 0; i < 60; i++) {
-          point = rotatePoint(0, 78, i * 6);
+          point = rotatePoint(0, 75, i * 6);
 		  if(i % 5 == 0 && i % 15 != 0){
 			if(i > 15 && i < 45)
-			  g.drawImage(imgCherry, point[0]-10,point[1]-10);
+			  g.drawImage(imgCherry, point[0]-7,point[1]-5,{scale:1.2});
 			else
-			  g.drawImage(imgStrawberry, point[0]-10,point[1]-10);
+			  g.drawImage(imgStrawberry, point[0]-7,point[1]-5,{scale:1.2});
 		  }
 		}
 	}
@@ -106,24 +104,28 @@ var imgMonsterBlue = {
      g.drawImage(imgMonsterBlue, 100,85);
      g.drawImage(imgMonsterBlue, 130,85);
   }
-	
-  
-	 function onMinute() {
+ function onMinute() {
+        print('M> '+ intervalRefMin);
+        drawDottedCircle(55,0xF800);
+		drawDottedCircle(48,'#54c0ed');
+		drawFruitRing();
+        drawMnters();
+        drawThickCircle(Radius-100,2); 
+        drawThickCircle(Radius-104,2);
 		g.setColor(0,0,0);
-		hand(360*minuteDate.getHours()/12, -10, 65);
+        hAng = minuteDate.getHours() % 12 * 30 + minuteDate.getMinutes() / 2 | 0;
+        hand(hAng, -10, 50);
 		hand(360*minuteDate.getMinutes()/60, -10, 80);
 		minuteDate = new Date();
-		g.setColor('#54c0ed');
-		hand(360*minuteDate.getHours()/12, -10, 65);
-        g.setColor(0xF800);
+		g.setColor('#54c0ed');//H
+        hAng = minuteDate.getHours() % 12 * 30 + minuteDate.getMinutes() / 2 | 0;
+        hand(hAng, -10, 50);
+        g.setColor(0xF800);//M
 		hand(360*minuteDate.getMinutes()/60, -10, 80);
 		if(minuteDate.getHours() >= 0 && minuteDate.getMinutes() === 0) {
 		  Bangle.buzz();
 		}
-		drawDottedCircle(58,0xF800);
-		drawDottedCircle(48,'#54c0ed');
-		drawFruitRing();
-	  }
+   }
 	function drawPacManTrack(dt){
 	  secondDate = dt || new Date();
 	  let currentSecond = secondDate.getSeconds();
@@ -187,11 +189,10 @@ var imgMonsterBlue = {
 		if(intervalRefSec) {clearInterval(intervalRefSec);}
 	}
 	function startEating(){
-        intervalRefMin = setInterval(onMinute,60*1000);
+      intervalRefMin = setInterval(onMinute,60*1000);
 		intervalRefSec = setInterval(function cb(){
 		  d = new Date();
 		  let s = d.getSeconds() + (d.getMilliseconds()/1000);
-          print(s);
 		  if(s> 1 && s < 1.5){
 			drawPacManTrack(d);
 		  }
@@ -199,8 +200,17 @@ var imgMonsterBlue = {
 		  drawPacMan(lastPacManAngle, true); // remove old
 		  drawPacMan(ang, false, 10+10*Math.sin(s*10)); // add new
 		  lastPacManAngle = ang;
+          let ab = Math.floor(ang);
+          //print(ab);
+          ab=ab-1;
+          //print(intervalRefMin);
+          if(ab === 90 || ab === 180 || ab === 270 || ab === 0){
+            print('XXX');
+            if(ab == 0 && intervalRefMin == null)
+              print ('INIT intervalRefMin ' + intervalRefMin);
+              
+          }
 		},100);
-		
 	}
     // special function to handle display switch on
     Bangle.on('lcdPower', (on) => {
