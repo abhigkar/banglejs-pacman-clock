@@ -128,13 +128,18 @@ var imgMonsterBlue = {
 	  secondDate = dt || new Date();
 	  let currentSecond = secondDate.getSeconds();
 	  for (i = 0; i < 60; i++) {
-		if(currentSecond < i){
-		  g.setColor(1,1,1);
-		}
-		else{
-		  g.setColor(0,0,0);
-		}
-		  point = rotatePoint(0, 108, i * 6);
+        if(dt){
+          g.setColor(1,1,1);
+        }
+        else{
+          if(currentSecond < i){
+		    g.setColor(1,1,1);
+          }
+          else{
+            g.setColor(0,0,0);
+          }
+        }
+     	  point = rotatePoint(0, 108, i * 6);
 		  if(i % 15 == 0){
 			 g.fillCircle(point[0], point[1], 6);
 		  }
@@ -166,10 +171,17 @@ var imgMonsterBlue = {
 		if (clear) return;
 		g.setColor(0); // black
 		var a = mouthAngle*PRad;
-		g.fillPoly([x,y,
+		/*g.fillPoly([x,y,
 					x+Math.cos(ang-a)*12, y+Math.sin(ang-a)*12,
 					x+Math.cos(ang+a)*12, y+Math.sin(ang+a)*12
 					]);
+                    */
+          g.fillPoly([x,y,
+            x+Math.cos(ang-a)*8, 
+            y+Math.sin(ang-a)*8,
+            x+Math.cos(ang+a)*8, 
+            y+Math.sin(ang+a)*8]);
+
 	}
 	function clearTimers() {
 		if(intervalRefSec) {clearInterval(intervalRefSec);}
@@ -179,7 +191,8 @@ var imgMonsterBlue = {
 		intervalRefSec = setInterval(function cb(){
 		  d = new Date();
 		  let s = d.getSeconds() + (d.getMilliseconds()/1000);
-		  if(d.getSeconds() === 0){
+          print(s);
+		  if(s> 1 && s < 1.5){
 			drawPacManTrack(d);
 		  }
 		  let ang = s*6;
