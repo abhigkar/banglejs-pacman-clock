@@ -24,6 +24,39 @@ var img4 = {
 
 
 
+
+
+  
+const p = Math.PI/2;
+const PRad = Math.PI/180;
+
+let intervalRefMin = null;
+let intervalRefSec = null;
+
+let minuteDate = new Date();
+let secondDate = new Date();
+
+
+function hand(angle, r1,r2) {
+  const a = angle*PRad;
+  const r3 = 3;
+  g.fillPoly([
+    120+Math.sin(a)*r1,
+    120-Math.cos(a)*r1,
+    120+Math.sin(a+p)*r3,
+    120-Math.cos(a+p)*r3,
+    120+Math.sin(a)*r2,
+    120-Math.cos(a)*r2,
+    120+Math.sin(a-p)*r3,
+    120-Math.cos(a-p)*r3]);
+}
+
+function drawAll() {
+  g.clear();
+  secondDate = minuteDate = new Date();
+  // draw hands first
+  onMinute();
+  // draw seconds
 g.drawImage(img,0,0);
 g.drawImage(img2,60,0);
 g.drawImage(img3,120,0);
@@ -47,3 +80,57 @@ g.drawImage(img2,60,0);
 g.drawImage(img3,120,0);
 
 g.setRotation(0);
+
+g.fillCircle(120,120,5);
+
+  onSecond();
+}
+
+function onSecond() {
+  
+}
+
+function onMinute() {
+  g.setColor(0,0,0);
+  hand(360*(minuteDate.getHours() + (minuteDate.getMinutes()/60))/12, -10, 50);
+  hand(360*minuteDate.getMinutes()/60, -10, 82);
+  minuteDate = new Date();
+  g.setColor(1,1,1);
+  hand(360*(minuteDate.getHours() + (minuteDate.getMinutes()/60))/12, -10, 50);
+  hand(360*minuteDate.getMinutes()/60, -10, 82);
+  if(minuteDate.getHours() >= 0 && minuteDate.getMinutes() === 0) {
+    Bangle.buzz();
+  }
+}
+
+function clearTimers() {
+  if(intervalRefMin) {clearInterval(intervalRefMin);}
+  if(intervalRefSec) {clearInterval(intervalRefSec);}
+}
+
+function startTimers() {
+  minuteDate = new Date();
+  secondDate = new Date();
+  intervalRefSec = setInterval(onSecond,1000);
+  intervalRefMin = setInterval(onMinute,60*1000);
+  drawAll();
+}
+
+Bangle.on('lcdPower',function(on) {
+  if (on) {
+    g.clear();
+    Bangle.drawWidgets();
+    startTimers();
+  }else {
+    clearTimers();
+  }
+});
+
+g.clear();
+Bangle.loadWidgets();
+Bangle.drawWidgets();
+drawAll();
+startTimers();
+
+
+
